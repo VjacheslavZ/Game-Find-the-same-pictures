@@ -78,10 +78,12 @@ body {
       right: 0;
       left: 0;
       background-color: #ded1ce;
+      opacity: 0;
       -webkit-transition: opacity .3s ease;
       -o-transition: opacity .3s ease;
       transition: opacity .3s ease; }
     .top-section th:after {
+      opacity: 0;
       content: "";
       display: block;
       position: absolute;
