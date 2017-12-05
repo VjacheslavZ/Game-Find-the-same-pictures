@@ -1,0 +1,18 @@
+body
+  font-size: 16px
+  font-family: $OpenSansRegular
+  margin: 0
+  position: relative
+  line-height: 1.6
+  overflow-x: hidden
+  -webkit-tap-highlight-color: transparent
+  scrollbar-base-color: $scroll_barr_color
+  scrollbar-arrow-color: $scroll_barr_color
+  &::-webkit-scrollbar
+    width: 17px
+  &::-webkit-scrollbar-thumb
+    background-color: $scroll_barr_color
+    &:hover
+      background-color: darken($scroll_barr_color, 10%)
+  &::-webkit-scrollbar-track-piece
+    background-color: transparent
