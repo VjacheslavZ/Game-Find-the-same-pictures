@@ -105,3 +105,6 @@ body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
+
+.found {
+  opacity: 0; }
