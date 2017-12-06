@@ -84,114 +84,71 @@
             }
         },500)
     };
-
     PlayGame.prototype.samePictures = function (self) {
-        let bodyEl = document.querySelector(this._settings.areaElem),
+        let areaElem = document.querySelector(self._settings.areaElem),
             firstSelectedEl,
             secondSelectedEl,
             thirdSelectedEle,
             counter = 0;
 
-            var body = document.querySelector("body");
-
-            body.addEventListener("click", function () {
-                console.log("внешние переменные 1" + firstSelectedEl +" 2 "+  secondSelectedEl + " 3 " + thirdSelectedEle);
-            });
-
-        bodyEl.addEventListener("click", function (event) {
+        areaElem.addEventListener("click", function (event) {
             let target = event.target;
+            if(target.classList.contains("selected"))  return false;
+
             counterPlus();
-            console.log(counter);
 
-            if(counter == 3){
-
-                let good = document.querySelectorAll(".selected");
-
-                for(var i = 0; i < 2; i++){
-                    good[i].classList.remove("selected")
-                }
-
+            if(counter === 3){
+                removeElements();
                 target.classList.add("selected");
-                firstSelectedEl = "";
-                secondSelectedEl = "";
-
+                resetVar();
                 counterPlus("reset");
                 return thirdSelectedEle = target.firstChild.getAttribute("src");
             }
 
-            
-            if(target.classList.contains("selected"))  return false;
-
             target.classList.add("selected");
 
-
-            let good = document.querySelectorAll(".selected");
-
-
-            if(counter == 1){
-                firstSelectedEl = target.firstChild.getAttribute("src");
-                if(firstSelectedEl == thirdSelectedEle){
-                    console.log("sdasdsadasdas")
-                }
-            }
-
-            if(counter == 2) secondSelectedEl = target.firstChild.getAttribute("src");
-
-
+            if(counter === 1) firstSelectedEl = target.firstChild.getAttribute("src");
+            if(counter === 2) secondSelectedEl = target.firstChild.getAttribute("src");
 
             if(firstSelectedEl && secondSelectedEl && thirdSelectedEle){
-                let good = document.querySelectorAll(".selected");
-
-                firstSelectedEl = "";
-                secondSelectedEl = "";
-                thirdSelectedEle = "";
-
-
-                for(var i = 0, max = good.length; i < max; i++){
-                    good[i].classList.remove("selected")
-                }
-
-
+                resetVar("reset all");
+                removeElements();
                 counterPlus("reset");
                 return false
             }
 
-            if(firstSelectedEl == secondSelectedEl){
-                console.log("cсравнение");
-
-                for(var i = 0, max = good.length; i < max; i++){
-                    good[i].style.display = "none";
-                    good[i].classList.remove("selected")
-                }
-
-                firstSelectedEl = "";
-                secondSelectedEl = "";
-
+            if(firstSelectedEl === secondSelectedEl){
+                removeElements("xxx");
+                resetVar();
                 counterPlus("reset");
                 return false
             }
 
-            if(firstSelectedEl == thirdSelectedEle){
-                console.log("cсравнение 1 и 3");
-
-                for(var i = 0, max = good.length; i < max; i++){
-                    good[i].style.display = "none";
-                    good[i].classList.remove("selected")
-                }
-
+            if(firstSelectedEl === thirdSelectedEle){
+                removeElements("xxx");
                 counterPlus("reset");
+                resetVar("reset all");
+                return false
+            }
 
+            function resetVar(all) {
                 firstSelectedEl = "";
                 secondSelectedEl = "";
-                thirdSelectedEle = "";
+                if ( all ) thirdSelectedEle = "";
 
-                return false
+            }
+
+            function removeElements(all) {
+                let selectedEl= document.querySelectorAll(".selected");
+
+                for(let i = 0, max = selectedEl.length; i < max; i++){
+                    if ( all) selectedEl[i].style.display = "none";
+                    selectedEl[i].classList.remove("selected")
+                }
             }
 
             function counterPlus(val) {
-
                 if(val){
-                    console.log("reset couter");
                     return counter = 0
                 }
                 return counter++
