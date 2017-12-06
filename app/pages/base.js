@@ -11,7 +11,7 @@
         var self = this;
 
         //здесь события
-        this.getPlayField(self);
+        //this.getPlayField(self);
         this.createPlayField(self);
         this.createRandomPictures(self);
         this.samePictures(self);
@@ -86,70 +86,120 @@
     };
 
     PlayGame.prototype.samePictures = function (self) {
-        var bodyEl = document.querySelector(this._settings.areaElem);
+        let bodyEl = document.querySelector(this._settings.areaElem),
+            firstSelectedEl,
+            secondSelectedEl,
+            thirdSelectedEle,
+            counter = 0;
 
-        var firstSelectedEl,
-            secondSelectedEl;
+            var body = document.querySelector("body");
 
-        var counter = 1;
-
-
-        console.log("main counter " + counter);
+            body.addEventListener("click", function () {
+                console.log("внешние переменные 1" + firstSelectedEl +" 2 "+  secondSelectedEl + " 3 " + thirdSelectedEle);
+            });
 
         bodyEl.addEventListener("click", function (event) {
-
-            console.log("начало програмы " + counter, firstSelectedEl ,secondSelectedEl);
-
             let target = event.target;
+            counterPlus();
+            console.log(counter);
+
+            if(counter == 3){
+
+                let good = document.querySelectorAll(".selected");
+
+                for(var i = 0; i < 2; i++){
+                    good[i].classList.remove("selected")
+                }
+
+                target.classList.add("selected");
+                firstSelectedEl = "";
+                secondSelectedEl = "";
+
+                counterPlus("reset");
+                return thirdSelectedEle = target.firstChild.getAttribute("src");
+            }
+
+            
             if(target.classList.contains("selected"))  return false;
 
             target.classList.add("selected");
 
 
-            if(counter == 1) firstSelectedEl = target.firstChild.getAttribute("src");
-            if(counter == 2) secondSelectedEl = target.firstChild.getAttribute("src");
-
-            console.log("конец програмы " + counter, firstSelectedEl ,secondSelectedEl);
-
             let good = document.querySelectorAll(".selected");
 
-            if(firstSelectedEl == secondSelectedEl){
-                console.log("cсравнение")
 
-                for(var i = 0; i < 2; i++){
+            if(counter == 1){
+                firstSelectedEl = target.firstChild.getAttribute("src");
+                if(firstSelectedEl == thirdSelectedEle){
+                    console.log("sdasdsadasdas")
+                }
+            }
+
+            if(counter == 2) secondSelectedEl = target.firstChild.getAttribute("src");
+
+
+
+            if(firstSelectedEl && secondSelectedEl && thirdSelectedEle){
+                let good = document.querySelectorAll(".selected");
+
+                firstSelectedEl = "";
+                secondSelectedEl = "";
+                thirdSelectedEle = "";
+
+
+                for(var i = 0, max = good.length; i < max; i++){
+                    good[i].classList.remove("selected")
+                }
+
+
+                counterPlus("reset");
+                return false
+            }
+
+            if(firstSelectedEl == secondSelectedEl){
+                console.log("cсравнение");
+
+                for(var i = 0, max = good.length; i < max; i++){
                     good[i].style.display = "none";
                     good[i].classList.remove("selected")
                 }
 
-                firstSelectedEl = "x";
-                secondSelectedEl = "y";
+                firstSelectedEl = "";
+                secondSelectedEl = "";
 
                 counterPlus("reset");
                 return false
             }
 
-            if(counter == 2){
+            if(firstSelectedEl == thirdSelectedEle){
+                console.log("cсравнение 1 и 3");
 
-                for(var i = 0; i < 2; i++){
+                for(var i = 0, max = good.length; i < max; i++){
+                    good[i].style.display = "none";
                     good[i].classList.remove("selected")
                 }
 
-                firstSelectedEl = "x";
-                secondSelectedEl = "y";
                 counterPlus("reset");
+
+                firstSelectedEl = "";
+                secondSelectedEl = "";
+                thirdSelectedEle = "";
+
                 return false
             }
 
-            counterPlus();
             function counterPlus(val) {
 
                 if(val){
-                    return counter = 1
+                    console.log("reset couter");
+                    return counter = 0
                 }
                 return counter++
             }
         });
     };
+
+
 
     //параметры игры
     let param = new PlayGame({
@@ -173,6 +223,10 @@
         rowAreaElem: "tr",
         columnAreaElem: "th",
         identicalPictures: 2,
+        fields:{
+            height: 4,
+            width: 4,
+        }
     });
 
     param.init();
