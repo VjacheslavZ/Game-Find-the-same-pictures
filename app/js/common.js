@@ -108,9 +108,6 @@
             }
         },500)
     };
-
-
-
     PlayGame.prototype.samePictures = function (self) {
         let areaElem = document.querySelector(self._settings.areaElem),
             firstSelectedEl,

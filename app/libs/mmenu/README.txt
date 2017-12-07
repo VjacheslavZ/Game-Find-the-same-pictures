@@ -1,1 +1,0 @@
-Please visit mmenu.frebsite.nl/wordpress-plugin/readme.html for all needed information on how to install and use this plugin.
