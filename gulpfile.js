@@ -47,18 +47,16 @@ gulp.task("css-libs", ['sass'], function () {
 
 gulp.task("scripts-libs", function () {
    return gulp.src([
-       "app/libs/jquery/dist/jquery.min.js",
+       // "app/libs/jquery/dist/jquery.min.js",
    ])
-       .pipe(concat("libs.min.js"))
-       .pipe(uglyfi())
+       // .pipe(concat("libs.min.js"))
+       // .pipe(uglyfi())
        .pipe(gulp.dest("app/js"));
 });
 
 gulp.task("script", function () {
    return gulp.src([
        "app/pages/base.js",
-       "app/pages/index/index.js",
-       "app/pages/news/news.js"
     ])
        .pipe(concat("common.js"))
        .pipe(gulp.dest("app/js"))

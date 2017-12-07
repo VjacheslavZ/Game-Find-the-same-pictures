@@ -8,8 +8,21 @@ block main
 
             .top-section__container
 
-                span.top-section__timer time:
-                    span.top-section__spend-time 999
+                .top-section__overlay
+                    a(href="#").play-btn Play Game
+
+                .top-section__overlay-again
+                    a(href="#").play-btn-again Play Again
+
+                span.top-section__score score:
+                    span.top-section__score-count
 
                 table
                     tbody
+
+                .top-section__timer
+                    span.top-section__tile time:
+                        span.top-section__playing-time 0
+
+
+

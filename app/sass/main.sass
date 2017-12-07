@@ -1,12 +1,11 @@
 @import "fonts"
 @import "vars"
 @import "sprite"
-
 @import "default"
 
 
 .top-section
-
+  position: relative
   transition: all .3s
   text-align: center
   min-height: 600px
@@ -17,13 +16,57 @@
   flex-direction: inherit
   justify-content: center
   align-items: center
-  &__timer
+  &__overlay-again
+    display: none
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background-color: rgba(0,0,0, 1)
+    z-index: 9
+    //display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    p
+      color: #fff
+    a
+      display: block
+      font-size: 40px
+      padding: 15px 45px
+      color: #000
+      text-decoration: none
+      background-color: #6EFF79
+  &__overlay
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background-color: rgba(0,0,0, .7)
+    z-index: 9
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    a
+      display: block
+      font-size: 40px
+      padding: 15px 45px
+      color: #000
+      text-decoration: none
+      background-color: #6EFF79
+    p
+      display: block
+      color: red
+  &__score
     color: #fff
     font-size: 30px
     text-align: right
     display: block
     text-transform: uppercase
-  &__spend-time
+  &__score-count
     color: red
     margin-left: 15px
     width: 70px
@@ -45,10 +88,10 @@
       right: 0
       left: 0
       background-color: #ded1ce
-      //opacity: 0
+      opacity: 1
       transition: opacity .3s ease
     &:after
-      //opacity: 0
+      opacity: 1
       content: ""
       display: block
       position: absolute
@@ -66,3 +109,13 @@
       opacity: 0
   img
     display: flex
+
+  &__timer
+    text-transform: uppercase
+    text-align: right
+  &__tile
+    color: #fff
+    font-size: 30px
+  &__playing-time
+    margin-left: 15px
+    color: red
