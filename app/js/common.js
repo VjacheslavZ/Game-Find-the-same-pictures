@@ -1,11 +1,20 @@
+
+
 ;(function () {
+
+    document.addEventListener("DOMContentLoaded", ready);
+
+
+    function ready() {
+        param.init();
+    }
 
     function PlayGame(data) {
         this._settings = data;
     }
 
     PlayGame.prototype.init = function () {
-        let self = this;
+        var self = this;
 
         this.startGame(self);
         this.getPlayField(self);
@@ -16,7 +25,7 @@
     };
 
     PlayGame.prototype.startGame = function (self) {
-        let playBtn = document.querySelector(self._settings.playBtn);
+        var playBtn = document.querySelector(self._settings.playBtn);
 
         playBtn.addEventListener("click", function () {
             document.querySelector(".top-section__overlay").style.display = "none";
@@ -24,9 +33,10 @@
         });
 
     };
+
     PlayGame.prototype.score = function (self) {
 
-        let scoreCounterStart = this._settings.score,
+        var scoreCounterStart = this._settings.score,
             payingTime = 0,
             newScore = document.querySelector(".top-section__score-count"),
             newPlayingTime = document.querySelector(".top-section__playing-time");
@@ -42,13 +52,14 @@
             }, 1000);
         })()
     };
+
     PlayGame.prototype.getPlayField = function (self) {
-        let xmlhttp = new XMLHttpRequest();
+        var xmlhttp = new XMLHttpRequest();
 
         xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
 
-                let data = JSON.parse(this.response);
+                var data = JSON.parse(this.response);
 
                 return self._settings.fields = data;
             }
@@ -57,9 +68,10 @@
         xmlhttp.open("GET", self._settings.urlFields, true);
         xmlhttp.send();
     };
+
     PlayGame.prototype.createPlayField = function (self) {
         setTimeout(function () {
-            let inBox = document.querySelector(self._settings.playAreaElem);
+            var inBox = document.querySelector(self._settings.playAreaElem);
 
             for (let i = 1, max = self._settings.fields.height; i <= max; i++){
 
@@ -67,20 +79,20 @@
 
                 for(let i = 1, max = self._settings.fields.width; i<= max; i++){
 
-                    let row = document.querySelector(self._settings.rowAreaElem);
+                    var row = document.querySelector(self._settings.rowAreaElem);
 
                     row.insertAdjacentHTML("afterbegin", `<th><img src=""></th>`);
 
                 }
             }
         },500)
-
     };
+
     PlayGame.prototype.createRandomPictures = function (self) {
 
         setTimeout(function () {
 
-            let cells = (self._settings.fields.height * self._settings.fields.width),
+            var cells = (self._settings.fields.height * self._settings.fields.width),
                 arrPictures= [],
                 iterations = Math.ceil(cells/10);
 
@@ -89,7 +101,7 @@
 
             for (key in self._settings.urlImages){
 
-                for(let i = 0,max = iterations; i < max; i++){
+                for(var i = 0,max = iterations; i < max; i++){
                     arrPictures.push(self._settings.urlImages[key])
                 }
             }
@@ -101,15 +113,16 @@
 
             console.log(arrPictures)
 
-            let images = document.querySelectorAll("img");
+            var images = document.querySelectorAll("img");
 
             for (var i =0, max = images.length; i < max; i++){
                 images[i].setAttribute("src", arrPictures[i]);
             }
         },500)
     };
+
     PlayGame.prototype.samePictures = function (self) {
-        let areaElem = document.querySelector(self._settings.areaElem),
+        var areaElem = document.querySelector(self._settings.areaElem),
             firstSelectedEl,
             secondSelectedEl,
             thirdSelectedEle,
@@ -119,7 +132,7 @@
         areaElem.addEventListener("click", function (event) {
             audio.play();
 
-            let target = event.target;
+            var target = event.target;
             if(target.classList.contains("selected"))  return false;
 
             counterPlus();
@@ -166,9 +179,9 @@
             }
 
             function removeElements(all) {
-                let selectedEl= document.querySelectorAll(".selected");
-
-                for(let i = 0, max = selectedEl.length; i < max; i++){
+                var selectedEl= document.querySelectorAll(".selected");
+                //forEach
+                for(var i = 0, max = selectedEl.length; i < max; i++){
                     if ( all ) {
                         selectedEl[i].remove();
 
@@ -187,8 +200,9 @@
             }
         });
     };
+
     PlayGame.prototype.gameOver = function (self) {
-        let cells = document.querySelectorAll("th"),
+        var cells = document.querySelectorAll("th"),
             scoreCounterStart = document.querySelector(".top-section__score-count").innerHTML,
             payingTime = document.querySelector(".top-section__playing-time").innerHTML,
             payBtnAgain = document.querySelector(".play-btn-again");
@@ -210,7 +224,7 @@
         }
     };
 
-    let param = new PlayGame({
+    var param = new PlayGame({
         urlFields: "https://kde.link/test/get_field_size.php",
         playBtn: '.play-btn',
         activeClass: 'selected',
@@ -231,13 +245,15 @@
         rowAreaElem: "tr",
         columnAreaElem: "th",
         score: 100,
+
         // fields:{
         //     height: 2,
         //     width: 2,
-        // }
+        //}
+
     });
 
-    param.init();
+
 })();
 
 
