@@ -1,11 +1,38 @@
-
-
 ;(function () {
 
-    document.addEventListener("DOMContentLoaded", ready);
+    function httpGetPlayFields(url) {
+        return new Promise(function (resolve, reject) {
 
+            var xhr = new XMLHttpRequest();
 
-    function ready() {
+            xhr.onload = function () {
+                if (this.readyState === 4 && this.status === 200){
+
+                    var data = JSON.parse(this.response);
+                    resolve(data)
+                } else {
+                    var error = new Error(this.statusText);
+                    error.code = this.status;
+                    reject(error);
+                }
+            };
+
+            xhr.open("GET", url, true);
+            xhr.send();
+            xhr.onerror = function() {
+                reject(new Error("Server not response"));
+            };
+        })
+    }
+
+    httpGetPlayFields("https://kde.link/test/get_field_size.php")
+        .then(
+            response => ready(response),
+            error => alert(`Rejected: ${error}`)
+    );
+
+    function ready(response) {
+        param._settings.fields = response;
         param.init();
     }
 
@@ -17,12 +44,10 @@
 
         var self = this;
 
-        this.getPlayField(self);
         this.startGame(self);
         this.createPlayField(self);
         this.createRandomPictures(self);
         this.samePictures(self);
-
     };
 
     PlayGame.prototype.startGame = function (self) {
@@ -34,7 +59,6 @@
         }
 
         playBtn.addEventListener("click", hideEle);
-
     };
 
     PlayGame.prototype.score = function (self) {
@@ -53,27 +77,11 @@
                 payingTime = payingTime + 1;
                 timeout();
             }, 1000);
-        })()
-    };
-
-    PlayGame.prototype.getPlayField = function (self) {
-        var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-
-                var data = JSON.parse(this.response);
-
-                return self._settings.fields = data;
-            }
-        };
-
-        xmlhttp.open("GET", self._settings.urlFields, true);
-        xmlhttp.send();
+        })();
     };
 
     PlayGame.prototype.createPlayField = function (self) {
-        setTimeout(function () {
+        // setTimeout(function () {
 
             var inBox = document.querySelector(self._settings.playAreaElem);
 
@@ -89,12 +97,12 @@
 
                 }
             }
-        },500)
+        // },500)
     };
 
     PlayGame.prototype.createRandomPictures = function (self) {
 
-        setTimeout(function () {
+        // setTimeout(function () {
 
             var cells = (self._settings.fields.height * self._settings.fields.width),
                 arrPictures= [],
@@ -121,7 +129,7 @@
                 images[i].setAttribute("src", arrPictures[i]);
             }
 
-        },500)
+        // },500)
     };
 
     PlayGame.prototype.samePictures = function (self) {
@@ -228,7 +236,7 @@
     };
 
     var param = new PlayGame({
-        urlFields: "https://kde.link/test/get_field_size.php",
+        //urlFields: "https://kde.link/test/get_field_size.php",
         playBtn: '.play-btn',
         activeClass: 'selected',
         urlImages: {
@@ -255,8 +263,6 @@
         //}
 
     });
-
-
 })();
 
 
