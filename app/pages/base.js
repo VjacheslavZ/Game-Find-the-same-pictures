@@ -14,10 +14,11 @@
     }
 
     PlayGame.prototype.init = function () {
+
         var self = this;
 
-        this.startGame(self);
         this.getPlayField(self);
+        this.startGame(self);
         this.createPlayField(self);
         this.createRandomPictures(self);
         this.samePictures(self);
@@ -27,10 +28,12 @@
     PlayGame.prototype.startGame = function (self) {
         var playBtn = document.querySelector(self._settings.playBtn);
 
-        playBtn.addEventListener("click", function () {
+        function hideEle() {
             document.querySelector(".top-section__overlay").style.display = "none";
             self.score();
-        });
+        }
+
+        playBtn.addEventListener("click", hideEle);
 
     };
 
@@ -71,6 +74,7 @@
 
     PlayGame.prototype.createPlayField = function (self) {
         setTimeout(function () {
+
             var inBox = document.querySelector(self._settings.playAreaElem);
 
             for (let i = 1, max = self._settings.fields.height; i <= max; i++){
@@ -111,13 +115,12 @@
 
             arrPictures.sort(() => Math.ceil(Math.random() * (arrPictures.length - 1)));
 
-            console.log(arrPictures)
-
             var images = document.querySelectorAll("img");
 
             for (var i =0, max = images.length; i < max; i++){
                 images[i].setAttribute("src", arrPictures[i]);
             }
+
         },500)
     };
 
@@ -129,10 +132,11 @@
             counter = 0,
             audio = new Audio('../sound/sound.mp3');
 
-        areaElem.addEventListener("click", function (event) {
+            areaElem.addEventListener("click", function (event) {
             audio.play();
 
             var target = event.target;
+
             if(target.classList.contains("selected"))  return false;
 
             counterPlus();
@@ -158,14 +162,14 @@
             }
 
             if(firstSelectedEl == secondSelectedEl){
-                removeElements("xxx");
+                removeElements(" ");
                 resetVar();
                 counterPlus("reset");
                 return false
             }
 
             if(firstSelectedEl == thirdSelectedEle){
-                removeElements("xxx");
+                removeElements(" ");
                 counterPlus("reset");
                 resetVar("reset all");
                 return false
@@ -180,11 +184,10 @@
 
             function removeElements(all) {
                 var selectedEl= document.querySelectorAll(".selected");
-                //forEach
+
                 for(var i = 0, max = selectedEl.length; i < max; i++){
                     if ( all ) {
                         selectedEl[i].remove();
-
                         self.gameOver()
 
                     }
