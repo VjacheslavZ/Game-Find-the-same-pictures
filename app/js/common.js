@@ -9,9 +9,11 @@
                 if (this.readyState === 4 && this.status === 200){
 
                     var data = JSON.parse(this.response);
+
                     resolve(data)
                 } else {
                     var error = new Error(this.statusText);
+
                     error.code = this.status;
                     reject(error);
                 }
@@ -19,6 +21,7 @@
 
             xhr.open("GET", url, true);
             xhr.send();
+
             xhr.onerror = function() {
                 reject(new Error("Server not response"));
             };
@@ -28,7 +31,7 @@
     httpGetPlayFields("https://kde.link/test/get_field_size.php")
         .then(
             response => ready(response),
-            error => alert(`Rejected: ${error}`)
+            error => responsesError(error)
     );
 
     function ready(response) {
@@ -36,12 +39,16 @@
         param.init();
     }
 
+    function responsesError(error) {
+        alert(`Rejected: ${error}`);
+        location.reload()
+    }
+
     function PlayGame(data) {
         this._settings = data;
     }
 
     PlayGame.prototype.init = function () {
-
         var self = this;
 
         this.startGame(self);
@@ -236,7 +243,6 @@
     };
 
     var param = new PlayGame({
-        //urlFields: "https://kde.link/test/get_field_size.php",
         playBtn: '.play-btn',
         activeClass: 'selected',
         urlImages: {
@@ -264,7 +270,3 @@
 
     });
 })();
-
-
-
-
